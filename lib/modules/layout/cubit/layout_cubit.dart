@@ -21,6 +21,7 @@ class LayOutCubit extends Cubit<LayOutStates> {
   static LayOutCubit get(context) => BlocProvider.of(context);
 
   int currentIndex = 0;
+
   List<Widget> bottomScreens = const [
     ProductsScreen(),
     CategoryScreen(),

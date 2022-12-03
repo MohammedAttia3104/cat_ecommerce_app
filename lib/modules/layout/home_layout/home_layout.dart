@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cat_ecommerce_app/global/constance/AppColors.dart';
+import 'package:cat_ecommerce_app/models/products_model/all_products_model.dart';
 import 'package:cat_ecommerce_app/modules/cart/cart_screen.dart';
 import 'package:cat_ecommerce_app/modules/layout/cubit/layout_cubit.dart';
 import 'package:cat_ecommerce_app/modules/layout/cubit/layout_states.dart';
@@ -7,8 +8,51 @@ import 'package:cat_ecommerce_app/modules/search/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  // final searchController = TextEditingController();
+  // List<ProductModel>? allProducts;
+  // List<ProductModel>? searchedProducts;
+  //
+  //
+  //
+  // void addSearchedForItemToSearchedList(String searchedProduct) {
+  //   searchedProducts = allProducts
+  //   .!where((product) => product.name.toLowerCase().startsWith(searchedProduct)).
+  //   toList
+  //   (
+  //   );
+  // }
+  // Widget buildSearchField() {
+  //   return TextField(
+  //     cursorColor: Colors.grey,
+  //     controller: searchController,
+  //     decoration: const InputDecoration(
+  //         border: InputBorder.none,
+  //         hintText: 'Find Your Product...',
+  //         hintStyle: TextStyle(
+  //           color: Colors.grey,
+  //           fontSize: 18,
+  //         )
+  //     ),
+  //     onChanged: (searchedProduct) {
+  //       addSearchedForItemToSearchedList(searchedProduct);
+  //     },
+  //   );
+  // }
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<LayOutCubit>(context).getProductsData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +64,9 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Shopee',),
+            title: const Text(
+              'Shopee',
+            ),
             actions: [
               IconButton(
                 onPressed: () {
@@ -47,10 +93,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CartScreen(),
-                        ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CartScreen(),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -98,8 +145,10 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
+
         );
       },
     );
   }
+
 }

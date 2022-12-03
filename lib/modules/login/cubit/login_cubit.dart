@@ -9,7 +9,7 @@ class LoginCubit extends Cubit<LoginStates> {
 
   LoginCubit get(context) => BlocProvider.of(context);
 
-  void userLogin({
+  void userLoginWithEmailAndPassword({
     required String emailAddress,
     required String password,
   })async {
@@ -28,6 +28,8 @@ class LoginCubit extends Cubit<LoginStates> {
         showFlutterToast(text: 'No user found for that email', state: ToastState.error);
       } else if (e.code == 'wrong-password') {
         showFlutterToast(text: 'Wrong password provided for that user', state: ToastState.error);
+      }else{
+        debugPrint(e.toString());
       }
     }
 

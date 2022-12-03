@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 
 class CartDatabaseHelper {
   CartDatabaseHelper._();
+
   static final CartDatabaseHelper db = CartDatabaseHelper._();
   static Database? _database;
 
@@ -16,7 +17,8 @@ class CartDatabaseHelper {
   }
 
   initDb() async {
-    String path = join(await getDatabasesPath(), 'CartProduct.db');
+    final dbPath = await getDatabasesPath();
+    String path = join(dbPath, 'CartProduct.db');
 
     return await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
@@ -25,7 +27,8 @@ class CartDatabaseHelper {
       $columnImage TEXT NOT NULL,
       $columnTitle TEXT NOT NULL,
       $columnPrice TEXT NOT NULL,
-      $columnQuantity INTEGER NOT NULL)
+      $columnQuantity INTEGER NOT NULL
+      )
       ''');
     });
   }
@@ -39,11 +42,11 @@ class CartDatabaseHelper {
     );
   }
 
-  Future<List<CartProductModel>>getAllProduct()async{
+  Future<List<CartProductModel>> getAllProduct() async {
     var dbClient = await database;
     List<Map>? maps = (await dbClient?.query(tableCartProduct))?.cast<Map>();
-    List<CartProductModel>? list = maps!.isNotEmpty ?
-        maps.map((product) => CartProductModel.fromJson(product)).toList()
+    List<CartProductModel>? list = maps!.isNotEmpty
+        ? maps.map((product) => CartProductModel.fromJson(product)).toList()
         : [];
     return list;
   }

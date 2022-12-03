@@ -26,24 +26,26 @@ class SignUpCubit extends Cubit<SignUpStates> {
         password: password,
       )
           .then((value) {
-            userCreate(
-                firstName: firstName,
-                lastName: lastName,
-                emailAddress: emailAddress,
-                phoneNumber: phoneNumber,
-                uId: value.user!.uid,
-            );
+        userCreate(
+          firstName: firstName,
+          lastName: lastName,
+          emailAddress: emailAddress,
+          phoneNumber: phoneNumber,
+          uId: value.user!.uid,
+        );
       });
     } on FirebaseAuthException catch (e) {
       emit(SignUpErrorState());
       if (e.code == 'weak-password') {
         showFlutterToast(
-            text: 'The password provided is too weak',
-            state: ToastState.warning);
+          text: 'The password provided is too weak',
+          state: ToastState.warning,
+        );
       } else if (e.code == 'email-already-in-use') {
         showFlutterToast(
-            text: 'The account already exists for that email',
-            state: ToastState.warning);
+          text: 'The account already exists for that email',
+          state: ToastState.warning,
+        );
       }
     } catch (e) {
       emit(SignUpErrorState());

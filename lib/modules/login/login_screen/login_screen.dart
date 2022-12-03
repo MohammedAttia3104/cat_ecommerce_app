@@ -26,7 +26,7 @@ class LoginScreen extends StatelessWidget {
         if (state is LoginSuccessState) {
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => HomeScreen()),
               (route) => false);
         }
       },
@@ -35,7 +35,6 @@ class LoginScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.white,
           body: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             key: formKey,
             child: Center(
               child: SingleChildScrollView(
@@ -104,8 +103,8 @@ class LoginScreen extends StatelessWidget {
                           },
                           textOnSubmitted: (val) {
                             if (formKey.currentState!.validate()) {
-                              print(emailController.text);
-                              print(passwordController.text);
+                              debugPrint(emailController.text);
+                              debugPrint(passwordController.text);
                             }
                           },
                           suffixIcon: cubit.suffix,
@@ -113,6 +112,7 @@ class LoginScreen extends StatelessWidget {
                           suffixOnPressed: () {
                             cubit.changePasswordVisibility();
                           },
+                          // toDo : Question Here
                           textAction: TextInputAction.next,
                         ),
                         const SizedBox(
@@ -120,23 +120,25 @@ class LoginScreen extends StatelessWidget {
                         ),
                         ConditionalBuilder(
                           condition: true,
-                          builder: (context){
+                          builder: (context) {
                             return CustomButton(
                               buttonOnPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  LoginCubit().get(context).userLogin(
+                                  cubit.userLoginWithEmailAndPassword(
                                     emailAddress: emailController.text,
                                     password: passwordController.text,
                                   );
                                 } else {
-                                  print('Not valid');
+                                  debugPrint('Not valid');
                                 }
                               },
                               buttonText: 'Sign In',
                             );
                           },
-                          fallback: (context){
-                            return const Center(child: CircularProgressIndicator(),);
+                          fallback: (context) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
                           },
                         ),
                         const SizedBox(
@@ -149,17 +151,18 @@ class LoginScreen extends StatelessWidget {
                               'Don\'t have an account?',
                             ),
                             TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignUpScreen(),
-                                      ));
-                                },
-                                child: const Text(
-                                  'Sign Up',
-                                ))
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SignUpScreen(),
+                                    ));
+                              },
+                              child: const Text(
+                                'Sign Up',
+                              ),
+                            ),
                           ],
                         ),
                       ],

@@ -36,7 +36,7 @@ class SignUpScreen extends StatelessWidget {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                builder: (context) => const HomeScreen(),
+                builder: (context) =>  HomeScreen(),
               ),
               (route) => false);
         }
@@ -90,6 +90,7 @@ class SignUpScreen extends StatelessWidget {
                         const SizedBox(
                           height: 15.0,
                         ),
+                        // toDo : How Can I make copy/paste/selectAll in TextField
                         DefaultTextFormField(
                           type: TextInputType.name,
                           focusNode: firstNameFocusNode,
@@ -234,23 +235,26 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         ConditionalBuilder(
                           condition: true,
-                          builder: (context){
-                            return  CustomButton(
-                                buttonOnPressed: () {
-                                  if (formKey.currentState!.validate()) {
-                                    SignUpCubit().get(context).userRegister(
-                                      firstName: firstNameController.text,
-                                      lastName: lastNameController.text,
-                                      emailAddress: emailController.text,
-                                      phoneNumber: phoneNumberController.text,
-                                      password: passwordController.text,
-                                    );
-                                  }
-                                },
-                                buttonText: 'Sign Up');
+                          builder: (context) {
+                            return CustomButton(
+                              buttonOnPressed: () {
+                                if (formKey.currentState!.validate()) {
+                                  SignUpCubit().get(context).userRegister(
+                                        firstName: firstNameController.text,
+                                        lastName: lastNameController.text,
+                                        emailAddress: emailController.text,
+                                        phoneNumber: phoneNumberController.text,
+                                        password: passwordController.text,
+                                      );
+                                }
+                              },
+                              buttonText: 'Sign Up',
+                            );
                           },
-                          fallback: (context){
-                            return const Center(child: CircularProgressIndicator(),);
+                          fallback: (context) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
                           },
                         ),
                         const SizedBox(

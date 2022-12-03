@@ -54,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: width * 0.21, //80
                       height: height * 0.1, //78
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             image: AssetImage(
